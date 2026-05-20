@@ -1,0 +1,315 @@
+/* ─────────────────────────────────────────────
+   CLEARBOT — Global Stylesheet
+   ───────────────────────────────────────────── */
+
+/* Font imports */
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@600,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens ─────────────────────────── */
+:root {
+  --bg-base:         #080E1A;
+  --bg-surface:      #0F1829;
+  --bg-elevated:     #162035;
+  --accent-green:    #00E676;
+  --accent-green-dim:rgba(0, 230, 118, 0.125);
+  --accent-blue:     #4D9EFF;
+  --text-primary:    #F0F4FF;
+  --text-secondary:  #8A96B0;
+  --text-muted:      #4A5568;
+  --border:          #1E2D45;
+  --error:           #FF5252;
+  --warning:         #FFB300;
+}
+
+/* ─── Base reset ────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: "DM Sans", system-ui, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--bg-base);
+}
+
+/* Prevent horizontal overflow at all times */
+#__next, main {
+  overflow-x: hidden;
+}
+
+/* ─── Typography helpers ─────────────────────── */
+.font-clash {
+  font-family: "Clash Display", sans-serif;
+}
+
+.font-dm {
+  font-family: "DM Sans", sans-serif;
+}
+
+/* ─── Focus styles ───────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+/* ─── Custom scrollbar ───────────────────────── */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-green) transparent;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 2px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--accent-green);
+  border-radius: 99px;
+}
+
+/* ─── Input / Select base ────────────────────── */
+.cb-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.cb-input::placeholder {
+  color: var(--text-muted);
+}
+
+.cb-input:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.15);
+}
+
+.cb-input.error {
+  border-color: var(--error);
+}
+
+.cb-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(255, 82, 82, 0.15);
+}
+
+/* ─── Skeleton shimmer ───────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-surface)  50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 6px;
+}
+
+/* ─── Progress bar shimmer gloss ────────────── */
+.progress-fill {
+  position: relative;
+  overflow: hidden;
+  background: var(--accent-green);
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 99px;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent       0%,
+    rgba(255,255,255,0.2) 50%,
+    transparent       100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+/* ─── Loading dots ───────────────────────────── */
+.loading-dots::after {
+  content: "...";
+  animation: dots 1.2s steps(4, end) infinite;
+  display: inline-block;
+  width: 1.5em;
+  text-align: left;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+@keyframes dots {
+  0%   { width: 0;     }
+  33%  { width: 0.5em; }
+  66%  { width: 1em;   }
+  100% { width: 1.5em; }
+}
+
+/* ─── Spin animation (for ⟳ icon in log feed) ── */
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Media: reduced motion ──────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Page animation wrapper ─────────────────── */
+.page-enter {
+  animation: pageIn 300ms ease-out both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Card shake animation ───────────────────── */
+.shake {
+  animation: shake 300ms ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-8px); }
+  80%      { transform: translateX(8px); }
+}
+
+/* ─── Log entry slide animation ─────────────── */
+.log-entry {
+  animation: slideIn 200ms ease-out both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── Completion screen animations ──────────── */
+.circle-path {
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  animation: drawCircle 600ms ease-out forwards;
+}
+
+.check-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawCheck 400ms ease-out 500ms forwards;
+}
+
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Particle burst */
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  opacity: 0;
+  animation: particleBurst 400ms ease-out 800ms forwards;
+}
+
+@keyframes particleBurst {
+  0%   { opacity: 1; transform: scale(0) translate(0, 0); }
+  100% { opacity: 0; transform: scale(1) translate(var(--tx), var(--ty)); }
+}
+
+/* ─── Toast ──────────────────────────────────── */
+.toast-enter {
+  animation: toastIn 200ms ease-out;
+}
+
+.toast-exit {
+  animation: toastOut 150ms ease-in forwards;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-12px); }
+}
+
+/* ─── Pulse logo ─────────────────────────────── */
+.pulse-logo {
+  animation: pulseLogo 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.1); }
+}
+
+/* ─── Tab-switch border pulse ────────────────── */
+.tab-warning {
+  animation: borderPulse 400ms ease-in-out 3;
+}
+
+@keyframes borderPulse {
+  0%, 100% { border-color: var(--error); }
+  50%      { border-color: transparent; }
+}
+
+/* ─── Fullscreen overlay ─────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 14, 26, 0.96);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+}
