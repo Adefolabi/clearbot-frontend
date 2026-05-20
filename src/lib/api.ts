@@ -4,8 +4,8 @@
    so errors are always ApiError instances.
    ───────────────────────────────────────────── */
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "https://clearbotbackend-adefolabi.fly.dev";
+const _raw = process.env.NEXT_PUBLIC_API_URL || "clearbotbackend-adefolabi.fly.dev";
+const API_URL = _raw.startsWith("http") ? _raw : `https://${_raw}`;
 
 export class ApiError extends Error {
   constructor(
@@ -42,7 +42,7 @@ export async function initiatePayment(
   matricNumber: string,
   email?: string,
 ): Promise<any> {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://clearbotbackend-adefolabi.fly.dev";
+  const baseUrl = API_URL;
   const res = await fetch(`${baseUrl}/api/assessment/start`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
