@@ -41,20 +41,11 @@ export interface InitiatePaymentResponse {
 export async function initiatePayment(
   matricNumber: string,
   email?: string,
-): Promise<any> {
-  const baseUrl = API_URL;
-  const res = await fetch(`${baseUrl}/api/assessment/start`, {
+): Promise<InitiatePaymentResponse> {
+  return request<InitiatePaymentResponse>("/api/payment/initiate", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ matricNumber, email }),
   });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => "Unknown server error");
-    throw new ApiError(res.status, text);
-  }
-
-  return res.json();
 }
 
 export interface PaymentStatusResponse {
