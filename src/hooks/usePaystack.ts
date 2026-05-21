@@ -27,6 +27,13 @@ export function usePaystack(): UsePaystackResult {
 
   const initializePayment = useCallback(
     (config: PaystackTransactionConfig) => {
+      const key = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY ?? "";
+      if (!key) {
+        console.error("[Paystack] NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY is not set — payment popup cannot open.");
+        config.onClose();
+        return;
+      }
+
       setIsLoading(true);
 
       import("@paystack/inline-js")
@@ -35,16 +42,18 @@ export function usePaystack(): UsePaystackResult {
 
           const popup = new mod.default();
           popup.newTransaction({
-            key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY ?? "",
-            email: config.email,
-            amount: config.amount,
-            ref: config.reference,
+            key,
+            email:     config.email,
+            amount:    config.amount,
+            ref:       config.reference,
             onSuccess: config.onSuccess,
-            onCancel: config.onClose,
+            onCancel:  config.onClose,
           });
         })
-        .catch(() => {
+        .catch((err) => {
           setIsLoading(false);
+          console.error("[Paystack] Failed to load inline-js SDK:", err);
+          config.onClose();
         });
     },
     [],
