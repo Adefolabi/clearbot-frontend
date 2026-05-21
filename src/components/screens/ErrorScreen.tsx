@@ -9,66 +9,38 @@
    assessment API with the same session data).
    ───────────────────────────────────────────── */
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useSession } from "@/hooks/useSession";
-import { useToast } from "@/components/ui/Toast";
-import { startAssessment } from "@/lib/api";
 
 // Fix 8: empty string hides the link until a real number is configured
 const WHATSAPP_NUMBER = ""; // set to your real WhatsApp number (e.g. "2348012345678")
 
 export function ErrorScreen() {
   const router = useRouter();
-  const { session, setSession, consumePassword } = useSession();
-  const { addToast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
+  const { session, setSession } = useSession();
 
   const errorDetails = session.errorDetails;
   const matricNumber = session.matricNumber ?? "";
-  const paymentRef = session.paymentRef ?? "";
+  const paymentRef   = session.paymentRef   ?? "";
 
   const whatsappText = encodeURIComponent(
     `Hi, my bot run failed. Matric: ${matricNumber}. Payment ref: ${paymentRef}.`,
   );
 
-  async function handleRetry() {
-    const password = consumePassword();
-    if (!password) {
-      addToast(
-        "Session expired — please go back to login to get a fresh session.",
-        "error",
-      );
-      return;
-    }
-    if (!session.matricNumber || !session.campus) {
-      addToast("Session data missing — please start over.", "error");
-      router.push("/");
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const { jobId } = await startAssessment({
-        matricNumber: session.matricNumber,
-        password,
-        campus: session.campus,
-        defaultRating: session.defaultRating ?? 3,
-      });
-
-      setSession({
-        jobId,
-        jobStartedAt: Date.now(),
-        errorDetails: undefined,
-      });
-      router.push("/running");
-    } catch {
-      addToast("Retry failed — please contact support.", "error");
-    } finally {
-      setIsLoading(false);
-    }
+  function handleRetry() {
+    // The portal password is never stored after first use — it must be re-entered.
+    // Keep paymentRef in session so the login form skips payment on resubmit.
+    // Clear only the stale job data.
+    setSession({
+      jobId:             undefined,
+      jobStartedAt:      undefined,
+      errorDetails:      undefined,
+      completionSummary: undefined,
+      failedCourses:     undefined,
+    });
+    router.push("/");
   }
 
   return (
@@ -90,8 +62,8 @@ export function ErrorScreen() {
         Something went wrong
       </h1>
       <p className="font-dm text-[14px] text-cb-secondary mt-3 leading-relaxed">
-        Don&apos;t worry — your ₦1,000 payment is still valid. Retry below at no
-        extra charge.
+        Don&apos;t worry — your ₦1,000 payment is still valid. Re-enter your
+        portal password below to try again. No extra charge.
       </p>
 
       {/* ── Error context ─────────────────────────── */}
@@ -125,12 +97,10 @@ export function ErrorScreen() {
         <Button
           variant="primary"
           fullWidth
-          isLoading={isLoading}
-          loadingText="Retrying..."
           onClick={handleRetry}
           aria-label="Retry assessment at no extra charge"
         >
-          Retry — No Extra Charge →
+          Re-enter Password to Retry →
         </Button>
 
         {/* Fix 8: only render when a real number is configured */}

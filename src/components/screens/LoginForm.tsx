@@ -30,7 +30,7 @@ const CAMPUS_OPTIONS = [
 
 export function LoginForm() {
   const router = useRouter();
-  const { setSession, storePassword } = useSession();
+  const { session, setSession, storePassword } = useSession();
   const { addToast } = useToast();
 
   const [matric, setMatric] = useState("");
@@ -79,6 +79,16 @@ export function LoginForm() {
     // Dev bypass: set NEXT_PUBLIC_SKIP_PAYMENT=true in .env.local to skip Paystack
     if (process.env.NEXT_PUBLIC_SKIP_PAYMENT === "true") {
       setSession({ matricNumber: normMatric, campus, paymentRef: "dev-bypass" });
+      storePassword(password);
+      setIsLoading(false);
+      router.push("/configure");
+      return;
+    }
+
+    // Retry path: user already has a valid paymentRef (e.g. returning from error screen).
+    // Skip payment entirely — they already paid. Just refresh credentials and go to configure.
+    if (session.paymentRef) {
+      setSession({ matricNumber: normMatric, campus });
       storePassword(password);
       setIsLoading(false);
       router.push("/configure");
