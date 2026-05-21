@@ -96,8 +96,8 @@ export function LoginForm() {
     }
 
     try {
-      await initiatePayment(normMatric);
-      setSession({ matricNumber: normMatric, campus });
+      const { reference, email, amount } = await initiatePayment(normMatric);
+      setSession({ matricNumber: normMatric, campus, paymentRef: reference, paymentEmail: email, paymentAmount: amount });
       storePassword(password);
       router.push("/pay");
     } catch {

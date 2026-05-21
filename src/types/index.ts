@@ -9,6 +9,8 @@ export interface SessionState {
   defaultRating: number;
   perCourseRatings: Record<string, number>;
   paymentRef: string;
+  paymentEmail: string;
+  paymentAmount: number;
   jobId: string;
   courses: CourseStatus[];
   completionSummary?: CompletionSummary;

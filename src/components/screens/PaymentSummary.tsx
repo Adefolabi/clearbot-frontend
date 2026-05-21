@@ -9,11 +9,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Check, Shield } from "lucide-react";
+import { Check, Shield } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useSession } from "@/hooks/useSession";
 import { usePaystack } from "@/hooks/usePaystack";
 import { useToast } from "@/components/ui/Toast";
+import { checkPaymentStatus } from "@/lib/api";
 
 export function PaymentSummary() {
   const router = useRouter();
@@ -23,20 +24,37 @@ export function PaymentSummary() {
 
   const [showOverlay, setShowOverlay] = useState(false);
 
-  function handlePay() {
-    const matricNumber = session.matricNumber ?? "student";
+  async function handlePay() {
+    const reference = session.paymentRef;
+    const email     = session.paymentEmail ?? `${(session.matricNumber ?? "student").toLowerCase()}@clearbot.ng`;
+    const amount    = session.paymentAmount ?? 100000;
+
+    if (!reference) {
+      addToast("Session expired — please go back and try again.", "error");
+      router.push("/");
+      return;
+    }
 
     initializePayment({
-      // Use student matric as email stub if no real email captured
-      email: `${matricNumber.toLowerCase()}@clearbot.student`,
-      amount: 100000, // ₦1,000 in kobo
-      reference: `cb-${matricNumber}-${Date.now()}`,
-      onSuccess(transaction) {
+      email,
+      amount,
+      reference,
+      async onSuccess(transaction) {
+        // Verify server-side before proceeding.
+        try {
+          const status = await checkPaymentStatus(transaction.reference);
+          if (!status.paid) {
+            addToast("Payment not confirmed yet — please wait a moment and try again.", "warning");
+            return;
+          }
+        } catch {
+          // Verification call failed (network issue). The webhook will mark it paid.
+          // Proceed optimistically — assessment/start will reject if not paid.
+        }
+
         setSession({ paymentRef: transaction.reference });
         setShowOverlay(true);
-        setTimeout(() => {
-          router.push("/configure");
-        }, 1500);
+        setTimeout(() => router.push("/configure"), 1500);
       },
       onClose() {
         addToast("Payment cancelled — click Pay to try again.", "warning");

@@ -34,17 +34,17 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 /* ─── Payment ─────────────────────────────────── */
 
 export interface InitiatePaymentResponse {
-  authorizationUrl: string;
   reference: string;
+  email: string;
+  amount: number; // kobo
 }
 
 export async function initiatePayment(
   matricNumber: string,
-  email?: string,
 ): Promise<InitiatePaymentResponse> {
   return request<InitiatePaymentResponse>("/api/payment/initiate", {
     method: "POST",
-    body: JSON.stringify({ matricNumber, email }),
+    body: JSON.stringify({ matricNumber }),
   });
 }
 
