@@ -37,6 +37,8 @@ export interface InitiatePaymentResponse {
   reference: string;
   email: string;
   amount: number; // kobo
+  /** True when the student already paid this semester but closed the site before running. */
+  alreadyPaid?: boolean;
 }
 
 export async function initiatePayment(

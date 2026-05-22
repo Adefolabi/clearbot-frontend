@@ -96,7 +96,17 @@ export function LoginForm() {
     }
 
     try {
-      const { reference, email, amount } = await initiatePayment(normMatric);
+      const result = await initiatePayment(normMatric);
+
+      if (result.alreadyPaid) {
+        // Student paid this semester but closed the site — skip payment, go straight to bot config.
+        setSession({ matricNumber: normMatric, campus, paymentRef: "already-paid" });
+        storePassword(password);
+        router.push("/configure");
+        return;
+      }
+
+      const { reference, email, amount } = result;
       setSession({ matricNumber: normMatric, campus, paymentRef: reference, paymentEmail: email, paymentAmount: amount });
       storePassword(password);
       router.push("/pay");
