@@ -150,7 +150,7 @@ export function LoginForm() {
             type="text"
             value={matric}
             onChange={(e) => setMatric(e.target.value)}
-            placeholder="e.g. BU22CSC1081"
+            placeholder="e.g. BU19LIT1071"
             autoCapitalize="off"
             autoComplete="off"
             autoCorrect="off"
