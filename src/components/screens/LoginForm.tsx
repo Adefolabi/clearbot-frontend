@@ -19,14 +19,11 @@ import { Button } from "@/components/ui/Button";
 import { useSession } from "@/hooks/useSession";
 import { useToast } from "@/components/ui/Toast";
 import { initiatePayment } from "@/lib/api";
-import { isValidMatric, normalizeMatric, isValidCampus } from "@/lib/validation";
+import { isValidMatric, normalizeMatric, isValidCampus, VALID_CAMPUSES } from "@/lib/validation";
 
 // Fix 1: values are the exact strings the backend validates against
-const CAMPUS_OPTIONS = [
-  { value: "Iwo Campus",       label: "Iwo Campus" },
-  { value: "Ogbomosho Campus", label: "Ogbomosho Campus" },
-  { value: "Abuja Campus",     label: "Abuja Campus" },
-];
+// Derived from VALID_CAMPUSES so the dropdown and validation can't drift apart.
+const CAMPUS_OPTIONS = VALID_CAMPUSES.map((c) => ({ value: c as string, label: c as string }));
 
 export function LoginForm() {
   const router = useRouter();
@@ -198,9 +195,11 @@ export function LoginForm() {
             isLoading={isLoading}
             loadingText="Checking..."
             className="mt-5"
-            aria-label="Continue to payment"
+            aria-label="Continue"
           >
-            Continue to Payment →
+            {session.paymentRef || process.env.NEXT_PUBLIC_SKIP_PAYMENT === "true"
+              ? "Continue →"
+              : "Continue to Payment →"}
           </Button>
         </div>
       </form>

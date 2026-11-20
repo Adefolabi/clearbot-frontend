@@ -53,6 +53,10 @@ export function ProgressScreen() {
             : undefined,
         },
         failedCourses: failedCourses.length > 0 ? failedCourses : undefined,
+        // Run is finished: drop the payment ref so a new login in this tab must pay again.
+        paymentRef: undefined,
+        paymentEmail: undefined,
+        paymentAmount: undefined,
       });
       const timer = setTimeout(() => navigate("/done"), 800);
       return () => clearTimeout(timer);

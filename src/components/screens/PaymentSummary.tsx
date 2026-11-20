@@ -104,7 +104,7 @@ export function PaymentSummary() {
           <div className="border-t border-cb-border mt-4 pt-4 flex flex-col gap-2">
             {[
               { label: "Subtotal", value: "₦1,000" },
-              { label: "Paystack fee", value: "~₦15" },
+              { label: "Paystack fee", value: "Included" },
             ].map(({ label, value }) => (
               <div key={label} className="flex justify-between">
                 <span className="font-dm text-[13px] text-cb-secondary">{label}</span>

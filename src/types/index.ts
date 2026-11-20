@@ -7,7 +7,6 @@ export interface SessionState {
   matricNumber: string;
   campus: string;
   defaultRating: number;
-  perCourseRatings: Record<string, number>;
   paymentRef: string;
   paymentEmail: string;
   paymentAmount: number;
@@ -44,6 +43,8 @@ export interface LogEntry {
   message: string;
   courseCode?: string;
   status?: LogStatus;
+  /** Machine-readable informational tag from the backend, e.g. "lecturer_not_assigned". */
+  notice?: string;
   timestamp: number;
 }
 
@@ -77,11 +78,4 @@ export interface ToastItem {
   message: string;
   type: "success" | "error" | "warning";
   exiting?: boolean;
-}
-
-/** A selectable course for per-course rating in the configure screen. */
-export interface Course {
-  code: string;
-  name: string;
-  semester: 1 | 2;
 }

@@ -13,16 +13,16 @@ import { RatingConfig } from "@/components/screens/RatingConfig";
 
 export default function ConfigurePage() {
   const router = useRouter();
-  const { session } = useSession();
+  const { session, ready } = useSession();
 
   // Fix 11: require both paymentRef and matricNumber — belt-and-suspenders after Fix 2
   useEffect(() => {
-    if (!session.paymentRef || !session.matricNumber) {
+    if (ready && (!session.paymentRef || !session.matricNumber)) {
       router.replace("/");
     }
-  }, [session.paymentRef, session.matricNumber, router]);
+  }, [ready, session.paymentRef, session.matricNumber, router]);
 
-  if (!session.paymentRef || !session.matricNumber) return null;
+  if (!ready || !session.paymentRef || !session.matricNumber) return null;
 
   return <RatingConfig />;
 }

@@ -14,15 +14,15 @@ import { ProgressScreen } from "@/components/screens/ProgressScreen";
 
 export default function RunningPage() {
   const router = useRouter();
-  const { session } = useSession();
+  const { session, ready } = useSession();
 
   useEffect(() => {
-    if (!session.jobId) {
+    if (ready && !session.jobId) {
       router.replace("/");
     }
-  }, [session.jobId, router]);
+  }, [ready, session.jobId, router]);
 
-  if (!session.jobId) return null;
+  if (!ready || !session.jobId) return null;
 
   return <ProgressScreen />;
 }

@@ -13,15 +13,15 @@ import { ErrorScreen } from "@/components/screens/ErrorScreen";
 
 export default function ErrorPage() {
   const router = useRouter();
-  const { session } = useSession();
+  const { session, ready } = useSession();
 
   useEffect(() => {
-    if (!session.errorDetails) {
+    if (ready && !session.errorDetails) {
       router.replace("/");
     }
-  }, [session.errorDetails, router]);
+  }, [ready, session.errorDetails, router]);
 
-  if (!session.errorDetails) return null;
+  if (!ready || !session.errorDetails) return null;
 
   return <ErrorScreen />;
 }

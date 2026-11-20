@@ -11,6 +11,7 @@
 
 import { RefObject } from "react";
 import type { LogEntry as LogEntryType } from "@/types";
+import { getNoticeText } from "@/lib/logNotices";
 
 interface LogEntryProps {
   entry: LogEntryType;
@@ -41,6 +42,36 @@ const TEXT_COLORS: Record<string, string> = {
 };
 
 export function LogEntry({ entry, isRecent, entryRef }: LogEntryProps) {
+  const noticeText = getNoticeText(entry);
+
+  // Informational notice (e.g. lecturer not assigned): neutral note, never an error.
+  if (noticeText) {
+    return (
+      <div
+        ref={entryRef}
+        role="note"
+        data-notice={entry.notice}
+        className="log-entry flex items-start gap-3 mx-2 my-1 px-4 py-2.5 rounded-lg border border-cb-border bg-cb-elevated"
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            color: "var(--accent-blue)",
+            minWidth: "16px",
+            textAlign: "center",
+            marginTop: "1px",
+            fontSize: "14px",
+          }}
+        >
+          ℹ
+        </span>
+        <p className="font-dm text-[13px] text-cb-secondary flex-1 min-w-0">
+          {noticeText}
+        </p>
+      </div>
+    );
+  }
+
   const status = entry.status ?? "info";
   const icon = ICONS[status] ?? "·";
   const isRunning = status === "running";

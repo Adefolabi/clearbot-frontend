@@ -68,7 +68,6 @@ export interface StartAssessmentBody {
   password: string;
   campus: string;
   defaultRating: number;
-  perCourseRatings?: Record<string, number>;
   dryRun?: boolean;
 }
 

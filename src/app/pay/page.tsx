@@ -14,15 +14,15 @@ import { PaymentSummary } from "@/components/screens/PaymentSummary";
 
 export default function PayPage() {
   const router = useRouter();
-  const { session } = useSession();
+  const { session, ready } = useSession();
 
   useEffect(() => {
-    if (!session.matricNumber) {
+    if (ready && !session.matricNumber) {
       router.replace("/");
     }
-  }, [session.matricNumber, router]);
+  }, [ready, session.matricNumber, router]);
 
-  if (!session.matricNumber) return null;
+  if (!ready || !session.matricNumber) return null;
 
   return <PaymentSummary />;
 }

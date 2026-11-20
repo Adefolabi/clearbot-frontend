@@ -28,7 +28,7 @@ const RATING_LABELS: Record<number, string> = {
 
 export function RatingConfig() {
   const router = useRouter();
-  const { session, setSession, consumePassword } = useSession();
+  const { session, setSession, consumePassword, storePassword } = useSession();
   const { addToast } = useToast();
 
   const [defaultRating, setDefaultRating] = useState(3);
@@ -65,6 +65,8 @@ export function RatingConfig() {
 
       router.push("/running");
     } catch {
+      // Put the password back so the user can simply retry instead of re-logging in.
+      storePassword(password);
       addToast("Failed to start the bot — please try again.", "error");
     } finally {
       setIsLoading(false);

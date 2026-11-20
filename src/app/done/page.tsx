@@ -14,15 +14,15 @@ import { CompletionScreen } from "@/components/screens/CompletionScreen";
 
 export default function DonePage() {
   const router = useRouter();
-  const { session } = useSession();
+  const { session, ready } = useSession();
 
   useEffect(() => {
-    if (!session.completionSummary) {
+    if (ready && !session.completionSummary) {
       router.replace("/");
     }
-  }, [session.completionSummary, router]);
+  }, [ready, session.completionSummary, router]);
 
-  if (!session.completionSummary) return null;
+  if (!ready || !session.completionSummary) return null;
 
   return <CompletionScreen />;
 }

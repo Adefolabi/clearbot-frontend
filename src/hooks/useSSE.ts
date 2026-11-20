@@ -4,11 +4,12 @@
    CLEARBOT — Server-Sent Events hook
    Connects to the backend progress stream, parses
    every event type, and handles reconnection with
-   exponential backoff (max 3 retries, 3 s delay).
+   a fixed delay (max 3 retries, 3 s apart).
    ───────────────────────────────────────────── */
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getProgressUrl } from "@/lib/api";
+import { isFailedLog } from "@/lib/logNotices";
 import type {
   CompletionSummary,
   ErrorDetails,
@@ -50,6 +51,7 @@ interface RawSSEPayload {
   message?: string;
   courseCode?: string;
   status?: LogStatus;
+  notice?: string;
   completed?: number;
   total?: number;
   skipped?: number;
@@ -116,8 +118,9 @@ export function useSSE(jobId: string | undefined): SSEHookResult {
           if (data.courseCode) {
             lastCourseRef.current = { code: data.courseCode };
           }
-          // Track every course that the bot couldn't submit
-          if (data.status === "failed" && data.courseCode) {
+          // Track every course that the bot couldn't submit. Informational notices
+          // (status "info") and skips never count as failures.
+          if (isFailedLog(data.status) && data.courseCode) {
             setFailedCourses((prev) =>
               prev.includes(data.courseCode!) ? prev : [...prev, data.courseCode!],
             );
@@ -127,6 +130,7 @@ export function useSSE(jobId: string | undefined): SSEHookResult {
             message: data.message ?? "",
             courseCode: data.courseCode,
             status: data.status,
+            notice: data.notice,
           });
           break;
         }
