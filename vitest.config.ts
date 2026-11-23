@@ -7,5 +7,11 @@ export default defineConfig({
   // Tests never process CSS; an inline (empty) config stops Vite loading postcss.config.js.
   css: { postcss: { plugins: [] } },
   resolve: { alias: { "@": path.resolve(__dirname, "src") } },
-  test: { environment: "node", include: ["src/**/*.test.{ts,tsx}"] },
+  test: {
+    environment: "node",
+    include: ["src/**/*.test.{ts,tsx}"],
+    // The default forks pool intermittently fails with "UNKNOWN: unknown error, read"
+    // when the project lives in a OneDrive-synced folder; threads loads reliably.
+    pool: "threads",
+  },
 });
