@@ -92,7 +92,7 @@ export function PaymentSummary() {
                 CLEARBOT Assessment Bot
               </h2>
               <p className="font-body text-[14px] leading-[1.45] text-cb-secondary">
-                1× automated run — 2025/2026 2nd Semester
+                1× automated run — 2026/2027 1st Semester
               </p>
             </div>
             <p className="shrink-0 font-display text-[32px] font-semibold tracking-[-0.64px] text-cb-blue">
