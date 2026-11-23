@@ -40,7 +40,7 @@ export function ErrorScreen() {
       completionSummary: undefined,
       failedCourses:     undefined,
     });
-    router.push("/");
+    router.push("/login");
   }
 
   return (
@@ -56,12 +56,12 @@ export function ErrorScreen() {
 
       {/* ── Heading ───────────────────────────────── */}
       <h1
-        className="font-clash font-semibold text-cb-primary"
+        className="font-display font-semibold text-cb-primary"
         style={{ fontSize: "28px" }}
       >
         Something went wrong
       </h1>
-      <p className="font-dm text-[14px] text-cb-secondary mt-3 leading-relaxed">
+      <p className="font-body text-[14px] text-cb-secondary mt-3 leading-relaxed">
         Don&apos;t worry — your ₦1,000 payment is still valid. Re-enter your
         portal password below to try again. No extra charge.
       </p>
@@ -72,19 +72,19 @@ export function ErrorScreen() {
           className="mt-6 rounded-[12px] border border-cb-border bg-cb-surface p-4 flex flex-col gap-2"
         >
           {errorDetails.courseCode && (
-            <p className="font-dm text-[13px] text-cb-secondary">
+            <p className="font-body text-[13px] text-cb-secondary">
               <span className="text-cb-primary font-medium">Failed at: </span>
               {errorDetails.courseCode}
               {errorDetails.courseName ? ` — ${errorDetails.courseName}` : ""}
             </p>
           )}
-          <p className="font-dm text-[13px] text-cb-secondary">
+          <p className="font-body text-[13px] text-cb-secondary">
             <span className="text-cb-primary font-medium">Progress: </span>
             {errorDetails.completedBefore} of {errorDetails.totalCourses} courses
             completed before the error
           </p>
           <p
-            className="font-dm text-[12px] mt-1 leading-snug"
+            className="font-body text-[12px] mt-1 leading-snug"
             style={{ color: "var(--error)" }}
           >
             {errorDetails.message}
@@ -109,7 +109,7 @@ export function ErrorScreen() {
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center font-dm text-[14px] text-cb-blue hover:underline min-h-[44px]"
+            className="flex items-center justify-center font-body text-[14px] text-cb-blue hover:underline min-h-[44px]"
           >
             Contact support on WhatsApp
           </a>

@@ -105,12 +105,12 @@ export function CompletionScreen() {
         style={{ animationDelay: "200ms" }}
       >
         <h1
-          className="font-clash font-semibold text-cb-primary"
+          className="font-display font-semibold text-cb-primary"
           style={{ fontSize: "40px", lineHeight: 1.1 }}
         >
           {hasFailed ? "Almost done!" : "All done!"}
         </h1>
-        <p className="font-dm text-[15px] text-cb-secondary mt-2">
+        <p className="font-body text-[15px] text-cb-secondary mt-2">
           {hasFailed
             ? `${summary?.completed ?? 0} courses assessed. ${failedCourses.length} couldn't be submitted — see below.`
             : "All lecturer assessments completed. You can now apply for clearance on SSHUB."}
@@ -168,7 +168,7 @@ export function CompletionScreen() {
               aria-hidden="true"
               style={{ color: "var(--warning)", flexShrink: 0 }}
             />
-            <p className="font-dm font-medium text-[13px] text-cb-primary">
+            <p className="font-body font-medium text-[13px] text-cb-primary">
               These courses need manual assessment:
             </p>
           </div>
@@ -177,19 +177,19 @@ export function CompletionScreen() {
             {failedCourses.map((code) => (
               <li key={code} className="flex items-center gap-2">
                 <span
-                  className="font-dm font-medium text-[13px]"
+                  className="font-body font-medium text-[13px]"
                   style={{ color: "var(--warning)" }}
                 >
                   ✕
                 </span>
-                <span className="font-dm text-[13px] text-cb-primary">
+                <span className="font-body text-[13px] text-cb-primary">
                   {code}
                 </span>
               </li>
             ))}
           </ul>
 
-          <p className="font-dm text-[12px] text-cb-muted mt-3 leading-relaxed">
+          <p className="font-body text-[12px] text-cb-muted mt-3 leading-relaxed">
             Log in to SSHUB and assess these lecturers manually before applying for clearance.
           </p>
         </div>
@@ -236,12 +236,12 @@ function StatPill({
   return (
     <div className="flex-1 flex flex-col items-center justify-center rounded-[10px] border border-cb-border bg-cb-surface px-3 py-3">
       <span
-        className="font-clash font-semibold text-[20px] leading-none"
+        className="font-display font-semibold text-[20px] leading-none"
         style={{ color }}
       >
         {value}
       </span>
-      <span className="font-dm text-[11px] text-cb-muted mt-1 leading-none">
+      <span className="font-body text-[11px] text-cb-muted mt-1 leading-none">
         {label}
       </span>
     </div>

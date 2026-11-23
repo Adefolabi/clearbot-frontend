@@ -43,7 +43,7 @@ export function LogFeed({ logs }: LogFeedProps) {
       <div
         className="rounded-[12px] border border-cb-border bg-cb-surface px-4 py-8 text-center"
       >
-        <p className="font-dm text-[13px] text-cb-muted">
+        <p className="font-body text-[13px] text-cb-muted">
           Waiting for the bot to start…
         </p>
       </div>

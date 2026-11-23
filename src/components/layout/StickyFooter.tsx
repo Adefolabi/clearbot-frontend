@@ -45,7 +45,7 @@ export function StickyFooter() {
         aria-hidden="true"
         style={{ color: "var(--warning)", flexShrink: 0 }}
       />
-      <p className="font-dm text-[13px] text-cb-secondary">
+      <p className="font-body text-[13px] text-cb-secondary">
         Keep this tab open until complete
       </p>
     </div>

@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────
-   CLEARBOT — Screen 1: Landing & Login (/)
-   Renders the hero + login card. No route guard
-   needed — this is the entry point of the app.
+   CLEARBOT — Landing (/)
+   Hero + "How it works". The login form now lives
+   at /login ("Get Started" links there).
    ───────────────────────────────────────────── */
 
-import { LoginForm } from "@/components/screens/LoginForm";
+import { HeroScreen } from "@/components/screens/HeroScreen";
 
 export default function HomePage() {
-  return <LoginForm />;
+  return <HeroScreen />;
 }

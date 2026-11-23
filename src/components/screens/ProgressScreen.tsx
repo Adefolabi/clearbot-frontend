@@ -94,7 +94,7 @@ export function ProgressScreen() {
           aria-hidden="true"
         >
           <span
-            className="font-clash font-semibold text-[20px]"
+            className="font-display font-semibold text-[20px]"
             style={{ color: "var(--accent-green)" }}
           >
             C
@@ -102,12 +102,12 @@ export function ProgressScreen() {
         </div>
 
         <h1
-          className="font-clash font-semibold text-cb-primary"
+          className="font-display font-semibold text-cb-primary"
           style={{ fontSize: "24px" }}
         >
           Running your assessments...
         </h1>
-        <p className="font-dm text-[14px] text-cb-secondary mt-1">
+        <p className="font-body text-[14px] text-cb-secondary mt-1">
           {isReconnecting
             ? "Reconnecting to server..."
             : "Sit tight — we're handling it."}
@@ -115,7 +115,7 @@ export function ProgressScreen() {
 
         {isReconnecting && (
           <p
-            className="font-dm text-[12px] mt-1"
+            className="font-body text-[12px] mt-1"
             style={{ color: "var(--warning)" }}
           >
             ⟳ Reconnecting...
@@ -128,13 +128,13 @@ export function ProgressScreen() {
         <ProgressBar completed={progress.completed} total={progress.total} height={8} />
 
         <div className="flex justify-between items-baseline mt-2">
-          <p className="font-dm text-[13px] text-cb-secondary">
+          <p className="font-body text-[13px] text-cb-secondary">
             {progress.total > 0
               ? `${progress.completed} of ${progress.total} courses done`
               : "Discovering your courses..."}
           </p>
           {remaining > 0 && (
-            <p className="font-dm text-[12px] text-cb-muted">
+            <p className="font-body text-[12px] text-cb-muted">
               {formatTime(estimatedSeconds)} left
             </p>
           )}

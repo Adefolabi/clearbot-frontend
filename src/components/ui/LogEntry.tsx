@@ -65,7 +65,7 @@ export function LogEntry({ entry, isRecent, entryRef }: LogEntryProps) {
         >
           ℹ
         </span>
-        <p className="font-dm text-[13px] text-cb-secondary flex-1 min-w-0">
+        <p className="font-body text-[13px] text-cb-secondary flex-1 min-w-0">
           {noticeText}
         </p>
       </div>
@@ -101,14 +101,14 @@ export function LogEntry({ entry, isRecent, entryRef }: LogEntryProps) {
       <div className="flex-1 min-w-0">
         {entry.courseCode && (
           <span
-            className="font-dm font-medium text-[14px] mr-2"
+            className="font-body font-medium text-[14px] mr-2"
             style={{ color: "var(--text-primary)" }}
           >
             {entry.courseCode}
           </span>
         )}
         <span
-          className="font-dm text-[13px] text-cb-secondary"
+          className="font-body text-[13px] text-cb-secondary"
         >
           {entry.message}
         </span>

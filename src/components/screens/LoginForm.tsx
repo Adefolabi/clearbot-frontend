@@ -1,21 +1,25 @@
 "use client";
 
 /* ─────────────────────────────────────────────
-   CLEARBOT — LoginForm screen component
-   Screen 1: Hero heading + login card with matric,
-   password, campus fields. Validates the matric
-   format, calls /api/assessment/start on submit,
-   then stores matricNumber + campus in session
-   and navigates to /pay. Password is stored via
-   storePassword() and never enters SessionState.
+   CLEARBOT — LoginForm screen component (/login)
+   Campus design "2 Login": headline + proof chip and
+   a white login card with matric, password, campus
+   fields. On desktop the headline sits in a blue
+   pitch panel beside the card. Validates the matric
+   format, calls the payment API on submit, then stores
+   matricNumber + campus in session and navigates to
+   /pay. Password is stored via storePassword() and
+   never enters SessionState.
    ───────────────────────────────────────────── */
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Lock } from "lucide-react"; // Fix 5: removed unused Star import
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
+import { ProofChip } from "@/components/ui/ProofChip";
 import { useSession } from "@/hooks/useSession";
 import { useToast } from "@/components/ui/Toast";
 import { initiatePayment } from "@/lib/api";
@@ -115,35 +119,44 @@ export function LoginForm() {
   }
 
   return (
-    <div className="page-enter min-h-[calc(100dvh-56px)] flex flex-col">
-      {/* ── Hero ─────────────────────────────────── */}
-      <section className="px-6 pt-10 pb-8">
-        <h1
-          className="font-clash font-semibold text-cb-primary"
-          style={{ fontSize: "32px", lineHeight: 1.15, maxWidth: "320px" }}
+    <div className="page-enter flex flex-col gap-[18px] px-6 pb-10 pt-5 lg:flex-row lg:items-center lg:gap-20 lg:pb-24 lg:pl-12 lg:pr-12 lg:pt-12 xl:pl-20 xl:pr-[120px]">
+      {/* ── Pitch (blue panel on desktop) ─────────── */}
+      <section className="flex flex-col gap-[18px] lg:flex-1 lg:items-start lg:gap-6 lg:rounded-card lg:bg-cb-green lg:px-[52px] lg:py-14">
+        <Link
+          href="/"
+          className="flex min-h-11 w-fit items-center gap-2 font-body text-[15px] font-bold text-cb-secondary lg:text-cb-on-accent"
         >
-          Skip the clicking. Print your clearance.
+          <Icon name="arrowLeft" className="lg:hidden" />
+          <Icon name="arrowLeftOnAccent" className="hidden lg:block" />
+          Back
+        </Link>
+
+        <h1 className="font-display text-[30px] font-semibold leading-none tracking-[-0.03em] text-cb-primary lg:text-[56px] lg:text-cb-on-accent">
+          Skip the clicking. Print your <span className="text-cb-blue lg:text-cb-on-accent">clearance</span>.
         </h1>
-        <p
-          className="font-dm text-cb-secondary mt-3"
-          style={{ fontSize: "15px", maxWidth: "300px" }}
-        >
+
+        <p className="font-body text-[15px] leading-[1.5] text-cb-secondary lg:text-[18px] lg:text-cb-on-accent">
           Complete all your lecturer assessments automatically. ₦1,000. Takes 3 minutes.
+        </p>
+
+        <ProofChip />
+
+        <p className="hidden font-body text-[14px] text-cb-on-accent lg:block">
+          “Saved me an hour during exams”
         </p>
       </section>
 
       {/* ── Login card ───────────────────────────── */}
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit} noValidate className="w-full lg:w-[480px] lg:shrink-0">
         <div
           ref={cardRef}
           className={[
-            "mx-4 rounded-[16px] border border-cb-border bg-cb-surface p-6",
+            "flex flex-col gap-[18px] rounded-card bg-cb-surface px-[26px] py-[30px] shadow-card",
             shaking ? "shake" : "",
           ].join(" ")}
-          style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.4)" }}
         >
           <Input
-            label="Matric Number"
+            label="Matric number"
             type="text"
             value={matric}
             onChange={(e) => setMatric(e.target.value)}
@@ -163,7 +176,6 @@ export function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Portal password"
             autoComplete="current-password"
-            containerClassName="mt-4"
             required
           />
 
@@ -172,17 +184,12 @@ export function LoginForm() {
             options={CAMPUS_OPTIONS}
             value={campus}
             onChange={(e) => setCampus(e.target.value)}
-            containerClassName="mt-4"
           />
 
           {/* Security note */}
-          <div className="flex items-start gap-2 mt-5">
-            <Lock
-              size={14}
-              aria-hidden="true"
-              style={{ color: "var(--accent-green)", marginTop: "1px", flexShrink: 0 }}
-            />
-            <p className="font-dm text-[12px] text-cb-muted">
+          <div className="flex items-start gap-[10px] rounded-[12px] bg-cb-green-dim px-[14px] py-3">
+            <Icon name="lock" />
+            <p className="flex-1 font-body text-[14px] leading-[1.45] text-cb-primary">
               Your password is never saved. Used once to log in, then gone.
             </p>
           </div>
@@ -192,45 +199,22 @@ export function LoginForm() {
             type="submit"
             variant="primary"
             fullWidth
+            withArrow
             isLoading={isLoading}
             loadingText="Checking..."
-            className="mt-5"
             aria-label="Continue"
           >
             {session.paymentRef || process.env.NEXT_PUBLIC_SKIP_PAYMENT === "true"
-              ? "Continue →"
-              : "Continue to Payment →"}
+              ? "Continue"
+              : "Continue to Payment"}
           </Button>
         </div>
       </form>
 
-      {/* ── Social proof strip ────────────────────── */}
-      <div
-        className="mt-auto px-6 py-4 border-t"
-        style={{
-          background: "var(--accent-green-dim)",
-          borderTopColor: "rgba(0,230,118,0.15)",
-        }}
-      >
-        <div className="flex items-center gap-2 mb-1">
-          <span
-            className="font-dm text-[14px]"
-            style={{ color: "var(--accent-green)" }}
-            aria-label="5 stars"
-          >
-            ★★★★★
-          </span>
-          <span className="font-dm text-[13px] text-cb-secondary">
-            Trusted by 300+ Bowen students this semester
-          </span>
-        </div>
-        <p
-          className="font-dm text-[13px] text-cb-secondary"
-          style={{ fontStyle: "italic" }}
-        >
-          "Saved me an hour during exams"
-        </p>
-      </div>
+      {/* Mobile-only testimonial (desktop shows it inside the blue panel) */}
+      <p className="font-body text-[14px] text-cb-secondary lg:hidden">
+        “Saved me an hour during exams”
+      </p>
     </div>
   );
 }

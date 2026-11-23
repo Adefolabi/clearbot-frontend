@@ -18,11 +18,15 @@ export default function ConfigurePage() {
   // Fix 11: require both paymentRef and matricNumber — belt-and-suspenders after Fix 2
   useEffect(() => {
     if (ready && (!session.paymentRef || !session.matricNumber)) {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [ready, session.paymentRef, session.matricNumber, router]);
 
   if (!ready || !session.paymentRef || !session.matricNumber) return null;
 
-  return <RatingConfig />;
+  return (
+    <div className="mx-auto w-full max-w-[480px]">
+      <RatingConfig />
+    </div>
+  );
 }

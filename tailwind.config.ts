@@ -21,16 +21,24 @@ const config: Config = {
         "cb-border":   "var(--border)",
         "cb-error":    "var(--error)",
         "cb-warning":  "var(--warning)",
+        "cb-control":  "var(--control-border)",
+        "cb-on-accent":"var(--on-accent)",
       },
       fontFamily: {
-        clash: ["Clash Display", "sans-serif"],
-        dm:    ["DM Sans", "sans-serif"],
+        display: ["Fraunces", "Georgia", "serif"],
+        body:    ["Plus Jakarta Sans", "system-ui", "sans-serif"],
       },
       borderRadius: {
         "4": "4px",
         "10": "10px",
         "12": "12px",
         "16": "16px",
+        card:    "var(--radius-card)",
+        control: "var(--radius-control)",
+      },
+      boxShadow: {
+        // Figma: login + order card shadow
+        card: "0 20px 48px rgba(20,20,59,0.08)",
       },
       keyframes: {
         shake: {

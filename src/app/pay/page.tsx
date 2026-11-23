@@ -18,7 +18,7 @@ export default function PayPage() {
 
   useEffect(() => {
     if (ready && !session.matricNumber) {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [ready, session.matricNumber, router]);
 

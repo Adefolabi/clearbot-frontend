@@ -52,7 +52,7 @@ export function RatingPills({
           >
             <span
               className={[
-                "font-clash font-semibold leading-none",
+                "font-display font-semibold leading-none",
                 compact ? "text-sm" : "text-[18px]",
                 isSelected ? "text-cb-green" : "text-cb-primary",
               ].join(" ")}
@@ -60,7 +60,7 @@ export function RatingPills({
               {rating}
             </span>
             {!compact && (
-              <span className="font-dm text-[10px] text-cb-muted leading-none">
+              <span className="font-body text-[10px] text-cb-muted leading-none">
                 {LABELS[rating]}
               </span>
             )}

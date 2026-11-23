@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────
    CLEARBOT — Root layout
-   Loads both custom fonts (Clash Display via
-   Fontshare, DM Sans via Google), wraps the app
+   Loads both custom fonts (Fraunces + Plus Jakarta
+   Sans via Google Fonts), wraps the app
    in SessionProvider + ToastProvider, and renders
    the persistent TopBar above all page content.
    ───────────────────────────────────────────── */
@@ -26,17 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Clash Display — loaded via Fontshare CDN */}
-        <link
-          rel="preconnect"
-          href="https://api.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&display=swap"
-          rel="stylesheet"
-        />
-        {/* DM Sans — loaded via Google Fonts */}
+        {/* Fraunces (display, SOFT 0 / WONK 1) + Plus Jakarta Sans (body) — Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -44,17 +34,15 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,600,0,1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-cb-base text-cb-primary font-dm antialiased">
+      <body className="bg-cb-base text-cb-primary font-body antialiased">
         <SessionProvider>
           <ToastProvider>
             <TopBar />
-            <main className="mx-auto w-full max-w-[480px]">
-              {children}
-            </main>
+            <main className="w-full">{children}</main>
           </ToastProvider>
         </SessionProvider>
       </body>
