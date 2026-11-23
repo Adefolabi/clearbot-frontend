@@ -15,7 +15,7 @@ import { ToastProvider } from "@/components/ui/Toast";
 export const metadata: Metadata = {
   title: "CLEARBOT — Automate Your Bowen Assessments",
   description:
-    "Complete all your Bowen University lecturer assessments automatically. ₦1,000. Takes 3 minutes.",
+    "Complete all your Bowen University lecturer assessments automatically. ₦2,000. Takes 3 minutes.",
 };
 
 export default function RootLayout({

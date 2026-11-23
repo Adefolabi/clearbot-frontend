@@ -23,7 +23,7 @@ export function HeroScreen() {
         </h1>
 
         <p className="font-body text-[17px] leading-[1.5] text-cb-secondary lg:max-w-[520px] xl:text-[20px]">
-          Complete all your lecturer assessments automatically. ₦1,000. Takes 3 minutes.
+          Complete all your lecturer assessments automatically. ₦2,000. Takes 3 minutes.
         </p>
 
         <Link
@@ -62,7 +62,7 @@ export function HeroScreen() {
               number="2"
               title={
                 <>
-                  Pay <span className="font-body font-bold">₦</span>1,000
+                  Pay <span className="font-body font-bold">₦</span>2,000
                 </>
               }
               body="One-time payment, secured by Paystack."

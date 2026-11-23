@@ -136,7 +136,7 @@ export function LoginForm() {
         </h1>
 
         <p className="font-body text-[15px] leading-[1.5] text-cb-secondary lg:text-[18px] lg:text-cb-on-accent">
-          Complete all your lecturer assessments automatically. ₦1,000. Takes 3 minutes.
+          Complete all your lecturer assessments automatically. ₦2,000. Takes 3 minutes.
         </p>
 
         <ProofChip />

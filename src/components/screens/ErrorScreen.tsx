@@ -62,7 +62,7 @@ export function ErrorScreen() {
         Something went wrong
       </h1>
       <p className="font-body text-[14px] text-cb-secondary mt-3 leading-relaxed">
-        Don&apos;t worry — your ₦1,000 payment is still valid. Re-enter your
+        Don&apos;t worry — your ₦2,000 payment is still valid. Re-enter your
         portal password below to try again. No extra charge.
       </p>
 

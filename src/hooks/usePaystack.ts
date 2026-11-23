@@ -11,7 +11,7 @@ import { useCallback, useState } from "react";
 
 export interface PaystackTransactionConfig {
   email: string;
-  amount: number;       // in kobo (₦1,000 = 100000)
+  amount: number;       // in kobo (₦2,000 = 200000)
   reference: string;
   onSuccess: (transaction: { reference: string }) => void;
   onClose: () => void;

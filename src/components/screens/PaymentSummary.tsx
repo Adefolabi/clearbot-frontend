@@ -2,7 +2,7 @@
 
 /* ─────────────────────────────────────────────
    CLEARBOT — PaymentSummary screen component
-   Campus design "3 Pay": displays the ₦1,000 order
+   Campus design "3 Pay": displays the ₦2,000 order
    summary, opens the Paystack popup, shows a
    post-payment success overlay, then navigates to
    /configure. Single column, 520px max on desktop.
@@ -34,7 +34,7 @@ export function PaymentSummary() {
   async function handlePay() {
     const reference = session.paymentRef;
     const email     = session.paymentEmail ?? `${(session.matricNumber ?? "student").toLowerCase()}@clearbot.ng`;
-    const amount    = session.paymentAmount ?? 100000;
+    const amount    = session.paymentAmount ?? 200000;
 
     if (!reference) {
       addToast("Session expired — please go back and try again.", "error");
@@ -96,7 +96,7 @@ export function PaymentSummary() {
               </p>
             </div>
             <p className="shrink-0 font-display text-[32px] font-semibold tracking-[-0.64px] text-cb-blue">
-              <span className="font-body font-bold">₦</span>1,000
+              <span className="font-body font-bold">₦</span>2,000
             </p>
           </div>
 
@@ -105,7 +105,7 @@ export function PaymentSummary() {
           {/* Line items */}
           <div className="flex justify-between font-body text-[15px] text-cb-secondary">
             <span>Subtotal</span>
-            <span>₦1,000</span>
+            <span>₦2,000</span>
           </div>
           <div className="flex justify-between font-body text-[15px] text-cb-secondary">
             <span>Paystack fee</span>
@@ -113,7 +113,7 @@ export function PaymentSummary() {
           </div>
           <div className="flex justify-between font-body text-[17px] font-bold text-cb-primary">
             <span>Total</span>
-            <span>₦1,000</span>
+            <span>₦2,000</span>
           </div>
 
           <div className="h-px w-full bg-cb-border" />
@@ -142,9 +142,9 @@ export function PaymentSummary() {
           isLoading={paystackLoading}
           loadingText="Opening payment..."
           onClick={handlePay}
-          aria-label="Pay ₦1,000 with Paystack"
+          aria-label="Pay ₦2,000 with Paystack"
         >
-          Pay ₦1,000 with Paystack
+          Pay ₦2,000 with Paystack
         </Button>
 
         {/* ── Trust footer ───────────────────────── */}
