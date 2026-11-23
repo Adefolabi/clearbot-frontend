@@ -18,11 +18,15 @@ export default function RunningPage() {
 
   useEffect(() => {
     if (ready && !session.jobId) {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [ready, session.jobId, router]);
 
   if (!ready || !session.jobId) return null;
 
-  return <ProgressScreen />;
+  return (
+    <div className="mx-auto w-full max-w-[480px]">
+      <ProgressScreen />
+    </div>
+  );
 }

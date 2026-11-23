@@ -43,7 +43,7 @@ export function RatingConfig() {
     }
     if (!session.matricNumber || !session.campus) {
       addToast("Session data missing — please start over.", "error");
-      router.push("/");
+      router.push("/login");
       return;
     }
 
@@ -85,20 +85,20 @@ export function RatingConfig() {
             style={{ width: "80%" }}
           />
         </div>
-        <p className="font-dm text-[12px] text-cb-secondary">
+        <p className="font-body text-[12px] text-cb-secondary">
           Step 2 of 2 — Almost there
         </p>
       </div>
 
       {/* ── Heading ──────────────────────────────── */}
       <h1
-        className="font-clash font-semibold text-cb-primary mt-2"
+        className="font-display font-semibold text-cb-primary mt-2"
         style={{ fontSize: "26px" }}
       >
         How should we rate your lecturers?
       </h1>
       {/* Fix 3: removed "customise per course below" — that feature is gone */}
-      <p className="font-dm text-[14px] text-cb-secondary mt-2 leading-relaxed">
+      <p className="font-body text-[14px] text-cb-secondary mt-2 leading-relaxed">
         This rating applies to all your courses.
       </p>
 
@@ -108,7 +108,7 @@ export function RatingConfig() {
       </div>
 
       {/* Dynamic label */}
-      <p className="font-dm text-[13px] text-cb-secondary mt-3">
+      <p className="font-body text-[13px] text-cb-secondary mt-3">
         <span style={{ color: "var(--accent-green)" }}>
           {RATING_LABELS[defaultRating]} ({defaultRating})
         </span>
@@ -116,7 +116,7 @@ export function RatingConfig() {
       </p>
 
       {/* Fix 3: replaced advanced toggle with a simple note */}
-      <p className="font-dm text-[13px] text-cb-muted mt-4 leading-relaxed">
+      <p className="font-body text-[13px] text-cb-muted mt-4 leading-relaxed">
         All courses use the same rating above. Per-course customisation is coming in a future update.
       </p>
 
@@ -139,7 +139,7 @@ export function RatingConfig() {
             aria-hidden="true"
             style={{ color: "var(--text-muted)", marginTop: "1px", flexShrink: 0 }}
           />
-          <p className="font-dm text-[12px] text-cb-muted">
+          <p className="font-body text-[12px] text-cb-muted">
             Your portal password is only active during this run.
           </p>
         </div>

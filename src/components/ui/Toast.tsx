@@ -117,7 +117,7 @@ function ToastCard({
       ].join(" ")}
       style={{ borderLeftWidth: "4px", borderLeftColor: BORDER_COLORS[toast.type] }}
     >
-      <p className="flex-1 font-dm text-[13px] text-cb-primary leading-snug">
+      <p className="flex-1 font-body text-[13px] text-cb-primary leading-snug">
         {toast.message}
       </p>
       <button

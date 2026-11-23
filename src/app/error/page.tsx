@@ -17,11 +17,15 @@ export default function ErrorPage() {
 
   useEffect(() => {
     if (ready && !session.errorDetails) {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [ready, session.errorDetails, router]);
 
   if (!ready || !session.errorDetails) return null;
 
-  return <ErrorScreen />;
+  return (
+    <div className="mx-auto w-full max-w-[480px]">
+      <ErrorScreen />
+    </div>
+  );
 }

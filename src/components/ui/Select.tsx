@@ -2,13 +2,13 @@
 
 /* ─────────────────────────────────────────────
    CLEARBOT — Select component
-   A styled native <select> with a floating
-   chevron icon. Uses the same height and border
-   treatment as Input for visual consistency.
+   A styled native <select> matching the Campus
+   field design, with the design's chevron icon in a
+   44px slot at the right edge.
    ───────────────────────────────────────────── */
 
 import { forwardRef, SelectHTMLAttributes, useId } from "react";
-import { ChevronDown } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 
 interface SelectOption {
   value: string;
@@ -39,10 +39,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const id = propId ?? generatedId;
 
     return (
-      <div className={`flex flex-col gap-1.5 ${containerClassName}`}>
+      <div className={`flex flex-col gap-2 ${containerClassName}`}>
         <label
           htmlFor={id}
-          className="font-dm text-[12px] uppercase tracking-[0.5px] text-cb-secondary"
+          className="font-body text-[13px] font-bold text-cb-primary"
         >
           {label}
         </label>
@@ -52,10 +52,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={id}
             aria-invalid={!!error}
-            className={`cb-input pr-10 text-cb-primary appearance-none ${
+            className={`cb-input text-cb-primary appearance-none ${
               error ? "error" : ""
             } ${className}`}
-            style={{ paddingRight: "2.5rem" }}
+            style={{ paddingRight: "3.5rem" }}
             {...props}
           >
             {options.map((opt) => (
@@ -65,18 +65,19 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
 
-          <ChevronDown
-            size={16}
+          <span
             aria-hidden="true"
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-cb-secondary"
-          />
+            className="pointer-events-none absolute right-1 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center"
+          >
+            <Icon name="chevronDown" />
+          </span>
         </div>
 
         {error && (
           <p
             role="alert"
             aria-live="polite"
-            className="font-dm text-[12px] text-cb-error"
+            className="font-body text-[12px] text-cb-error"
           >
             {error}
           </p>

@@ -2,33 +2,30 @@
 
 /* ─────────────────────────────────────────────
    CLEARBOT — TopBar layout component
-   Fixed 56-px header shown on every screen.
-   Contains the CLEARBOT wordmark on the left and
-   nothing on the right — no nav links needed for
-   this single-flow experience.
+   Nav from the Campus design: zap-mark logo +
+   CLEARBOT wordmark on the left, nothing on the
+   right. Padding steps up from mobile (20/18) to
+   desktop (80/24) as in the Figma frames.
    ───────────────────────────────────────────── */
 
 import Link from "next/link";
+import { Icon } from "@/components/ui/Icon";
 
 export function TopBar() {
   return (
-    <header
-      className="w-full h-14 flex items-center px-6 border-b border-cb-border bg-cb-base"
-      style={{ position: "sticky", top: 0, zIndex: 100 }}
-    >
+    <header className="flex w-full items-center justify-between px-5 py-[18px] lg:px-12 lg:py-6 xl:px-20">
       <Link
         href="/"
-        className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+        className="flex items-center gap-[10px] transition-opacity hover:opacity-80"
         aria-label="CLEARBOT — go to home"
       >
         <span
           aria-hidden="true"
-          className="flex items-center justify-center w-7 h-7 rounded-full text-[var(--bg-base)] font-clash font-semibold text-[13px]"
-          style={{ background: "var(--accent-green)" }}
+          className="flex size-[34px] items-center justify-center rounded-full bg-cb-green"
         >
-          C
+          <Icon name="zap" />
         </span>
-        <span className="font-clash font-semibold text-[18px] text-cb-primary tracking-tight">
+        <span className="font-display text-[22px] font-semibold tracking-[-0.44px] text-cb-primary">
           CLEARBOT
         </span>
       </Link>

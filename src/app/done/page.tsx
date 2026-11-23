@@ -18,11 +18,15 @@ export default function DonePage() {
 
   useEffect(() => {
     if (ready && !session.completionSummary) {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [ready, session.completionSummary, router]);
 
   if (!ready || !session.completionSummary) return null;
 
-  return <CompletionScreen />;
+  return (
+    <div className="mx-auto w-full max-w-[480px]">
+      <CompletionScreen />
+    </div>
+  );
 }
