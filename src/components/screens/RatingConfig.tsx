@@ -14,8 +14,25 @@ import { RatingPills } from "@/components/ui/RatingPills";
 import { Button } from "@/components/ui/Button";
 import { useSession } from "@/hooks/useSession";
 import { useToast } from "@/components/ui/Toast";
-import { startAssessment } from "@/lib/api";
+import { startAssessment, ApiError } from "@/lib/api";
 // Fix 3: Course type import removed — no hardcoded course list
+
+/** Turns a failed /start call into a message the student can act on. */
+function startErrorMessage(err: unknown): string {
+  if (!(err instanceof ApiError)) {
+    return "Couldn't reach the server — check your connection and try again.";
+  }
+  if (err.status === 402) {
+    return "We couldn't find a confirmed payment for this matric number. If you just paid, wait a minute and try again.";
+  }
+  let serverMessage = "";
+  try {
+    serverMessage = JSON.parse(err.message)?.error ?? "";
+  } catch {
+    /* body wasn't JSON */
+  }
+  return serverMessage || `Failed to start the bot (error ${err.status}) — please try again.`;
+}
 
 // Fix 4: 0 label updated to match backend documentation
 const RATING_LABELS: Record<number, string> = {
@@ -64,10 +81,10 @@ export function RatingConfig() {
       });
 
       router.push("/running");
-    } catch {
+    } catch (err) {
       // Put the password back so the user can simply retry instead of re-logging in.
       storePassword(password);
-      addToast("Failed to start the bot — please try again.", "error");
+      addToast(startErrorMessage(err), "error");
     } finally {
       setIsLoading(false);
     }
